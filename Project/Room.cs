@@ -15,8 +15,8 @@ namespace CastleGrimtol.Project
         {
 
         }
-        public void AddItems(){
-            Items.Add(Key);
+        public void AddItems(Item addedItem){
+            Items.Add(addedItem);
         }
         public Room(string name, string description)
         {
