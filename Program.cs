@@ -9,7 +9,7 @@ namespace CastleGrimtol
         {
             Game MainGame = new Game();
 
-            MainGame.Setup();
+            MainGame.GameLoop();
 
         }
     }
