@@ -31,8 +31,7 @@ namespace CastleGrimtol.Project
             Exits = new Dictionary<string, Room>();
             LockedExits = new Dictionary<string, Room>();
             Events = new List<Event>();
-            Locked = new Dictionary<string, bool>();
-            
+            Locked = new Dictionary<string, bool>();  
         }
 
     }
