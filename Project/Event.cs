@@ -21,6 +21,9 @@ namespace CastleGrimtol.Project
         {
             List<Item> roomItems = new List<Item>();
         }
+        public void RoomSearchCheck(Room room){
+            
+        }
         public void InventoryCheck(Player currentPlayer, Room room)
         {
             for (int i = 0; i < currentPlayer.Inventory.Count; i++)

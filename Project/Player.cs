@@ -47,7 +47,7 @@ namespace CastleGrimtol.Project
         {
             for (int i = 0; i < currentRoom.Items.Count; i++)
             {
-                if (currentRoom.Items[i].Name == item || currentRoom.Items[i].Name.ToLower() == item)
+                if (currentRoom.Items[i].Name.ToLower() == item)
                 {
                     System.Console.Clear();
                     currentPlayer.Inventory.Add(currentRoom.Items[i]);
@@ -57,7 +57,48 @@ namespace CastleGrimtol.Project
         }
         public void Look(Room currentRoom)
         {
-            System.Console.Clear();
+            // System.Console.Clear();
+            System.Console.WriteLine(currentRoom.Description);
+        }
+        public void Search(Room currentRoom, string option)
+        {
+            if (currentRoom.SearchableObjects.Count > 0)
+            {
+                foreach (var keyword in currentRoom.SearchableObjects)
+                {
+                    string searchable = keyword.Key.ToLower();
+                    if (searchable == option)
+                    {
+                        currentRoom.Items.Add(currentRoom.SearchableObjects[keyword.Key]);
+                        currentRoom.SearchableObjects.Remove(keyword.Key);
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                switch (option)
+                {
+                    case "room":
+                        if (currentRoom.SearchDescription == "")
+                        {
+                            System.Console.WriteLine("There is nothing notable in this room.");
+                        }
+                        else if (currentRoom.Searched == false)
+                        {
+                            currentRoom.Description += currentRoom.SearchDescription;
+                            currentRoom.Searched = true;
+                        }
+                        else
+                        {
+                            System.Console.WriteLine("You've already searched this room.");
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
         public void Help()
         {
