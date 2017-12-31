@@ -6,10 +6,11 @@ namespace CastleGrimtol.Project
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        public List<Item> Inventory { get; set; }
         public bool Alive { get; set; }
         public int Score { get; set; }
         public string Gender { get; set; }
-        public List<Item> Inventory { get; set; }
+        public Room PreviousRoom { get; set; }
         public string RestartText { get; set; }
 
         public Player(string name, string lastName, string gender, List<Item> inventory, bool alive)
@@ -20,6 +21,7 @@ namespace CastleGrimtol.Project
             Alive = alive;
             Gender = "NA";
             Gender = gender;
+            PreviousRoom = new Room("", "");
             RestartText = "You have died. Would you like to play again? (Y/N): ";
         }
         public Room Go(Player currentPlayer, Room currentRoom, string direction)
@@ -29,6 +31,24 @@ namespace CastleGrimtol.Project
             //given a string direction...
             //check if the currentroom.exits contains a key for direction
 
+            switch (direction)
+            {
+                case "north":
+                    direction = "n";
+                    break;
+                case "south":
+                    direction = "s";
+                    break;
+                case "east":
+                    direction = "e";
+                    break;
+                case "west":
+                    direction = "w";
+                    break;
+                default:
+                    break;
+            }
+
             if (currentRoom.Locked.ContainsKey(direction))
             {
                 System.Console.WriteLine(currentRoom.LockedMessage);
@@ -37,9 +57,24 @@ namespace CastleGrimtol.Project
             else if (currentRoom.Exits.ContainsKey(direction))
             {
                 System.Console.Clear();
-                isAlive = Event.DangerCheck(currentPlayer, currentRoom);
+                isAlive = Event.DangerCheck(currentPlayer, currentRoom, direction);
                 if (isAlive)
                 {
+                    switch (currentRoom.Name)
+                    {
+                        case "Vault Cave-in 7":
+                            currentRoom.Description = currentRoom.DefaultDescription;
+                            for (int i = 0; i < currentRoom.Enemies.Count; i++)
+                            {
+                                Enemy enemy = currentRoom.Enemies[i];
+                                enemy.Pacified = false;
+                                currentRoom.EnemyDescribed = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    currentPlayer.PreviousRoom = currentRoom;
                     currentRoom = currentRoom.Exits[direction];
                     return currentRoom;
                 }
@@ -56,11 +91,21 @@ namespace CastleGrimtol.Project
         {
             for (int i = 0; i < currentRoom.Items.Count; i++)
             {
-                if (currentRoom.Items[i].Name.ToLower() == item)
+                if (currentRoom.Items[i].Name.ToLower() == item && currentRoom.Items[i].Takeable == true)
                 {
                     System.Console.Clear();
                     currentPlayer.Inventory.Add(currentRoom.Items[i]);
                     currentRoom.Items.Remove(currentRoom.Items[i]);
+                }
+                else if (currentRoom.Items[i].Takeable == false)
+                {
+                    {
+                        System.Console.WriteLine("You can't take that.");
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine("Take what?");
                 }
             }
         }
@@ -116,13 +161,33 @@ namespace CastleGrimtol.Project
         }
         public void UseItem(Player currentPlayer, Room currentRoom, Item item)
         {
-            switch (item.Type)
+            Enemy enemy = new Enemy("", false, "", "", "");
+            switch (item.Name.ToLower())
             {
-                case "Key":
-                    System.Console.WriteLine("Hey you used a key brah!");
-
-                    currentRoom.Locked.Remove(item.Direction);
-                    currentPlayer.Inventory.Remove(item);
+                case "rock":
+                    switch (currentRoom.Name)
+                    {
+                        case "Vault Cave-in 7":
+                            for (int i = 0; i < currentRoom.Enemies.Count; i++)
+                            {
+                                enemy = currentRoom.Enemies[i];
+                                enemy.Pacified = true;
+                                currentRoom.Description = enemy.PacifiedMessage;
+                                currentPlayer.Inventory.Remove(item);
+                            }
+                            break;
+                        default:
+                            currentRoom.Description = "You threw the rock as hard as you could and it shattered against the wall.";
+                            currentPlayer.Inventory.Remove(item);
+                            break;
+                    }
+                    break;
+                    case "pistol":
+                        for (int i = 0; i < currentPlayer.Inventory.Count; i++)
+                        {
+                        
+                            
+                        }
                     break;
                 default:
                     break;

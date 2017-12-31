@@ -162,7 +162,7 @@ namespace CastleGrimtol.Project
             for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
             {
                 Item item = CurrentPlayer.Inventory[i];
-                if (item.Name == itemName)
+                if (item.Name.ToLower() == itemName)
                 {
                     CurrentPlayer.UseItem(CurrentPlayer, CurrentRoom, item);
                     return;

@@ -7,9 +7,11 @@ namespace CastleGrimtol.Project
         // Item Key = new Item("Key", "It unlocks a door");
         public string Name { get; set; }
         public string Description { get; set; }
+        public string DefaultDescription { get; set; }
         public string LockedMessage { get; set; }
         public string SearchDescription { get; set; }
         public bool Searched { get; set; }
+        public bool EnemyDescribed { get; set; }
         public List<Item> Items { get; set; }
         public List<Enemy> Enemies { get; set; }
         public Dictionary<string, bool> Locked;
@@ -34,8 +36,10 @@ namespace CastleGrimtol.Project
         {
             Name = name;
             Description = description;
+            DefaultDescription = Description;
             SearchDescription = "";
             Searched = false;
+            EnemyDescribed = false;
             Items = new List<Item>();
             Enemies = new List<Enemy>();
             Exits = new Dictionary<string, Room>();

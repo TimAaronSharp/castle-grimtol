@@ -101,31 +101,36 @@ namespace CastleGrimtol.Project
         }
         public void EnemyCheck(Room room)
         {
-            if (room.Enemies.Count > 0)
+            if (room.Enemies.Count > 0 && room.EnemyDescribed == false)
             {
                 for (int i = 0; i < room.Enemies.Count; i++)
                 {
                     Enemy enemy = room.Enemies[i];
                     room.Description += enemy.Description;
+                    room.EnemyDescribed = true;
                 }
             }
         }
-        public bool DangerCheck(Player currentPlayer, Room room)
+        public bool DangerCheck(Player currentPlayer, Room room, string direction)
         {
             switch (room.Name)
             {
                 case "Vault Cave-in 7":
-                    for (int i = 0; i < room.Enemies.Count; i++)
+                    if ((currentPlayer.PreviousRoom.Name == "Vault Cave-in 6" && direction != "w") || (currentPlayer.PreviousRoom.Name == "Vault Cave-in 8" && direction != "n"))
                     {
-                        Enemy enemy = room.Enemies[i];
-                        switch (enemy.Pacified)
+                        for (int i = 0; i < room.Enemies.Count; i++)
                         {
-                            case false:
-                                System.Console.WriteLine(enemy.KillMessage);
-                                currentPlayer.Alive = false;
-                                return currentPlayer.Alive;
-                            default:
-                                break;
+                            Enemy enemy = room.Enemies[i];
+                            switch (enemy.Pacified)
+                            {
+                                case false:
+
+                                    System.Console.WriteLine(enemy.KillMessage);
+                                    currentPlayer.Alive = false;
+                                    return currentPlayer.Alive;
+                                default:
+                                    break;
+                            }
                         }
                     }
                     return currentPlayer.Alive;

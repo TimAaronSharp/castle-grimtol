@@ -8,11 +8,11 @@ namespace CastleGrimtol.Project
         {
             List<Item> ItemList = new List<Item>();
             #region Constructing items
-            Item bronzeKey = new Item("Bronze Key", "It's a bronze key", "Key", " There is a bronze key on the floor.");
-            Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.");
-            Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.");
-            Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.");
-            Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", " On the ground you see several baseball-sized rocks.");
+            Item bronzeKey = new Item("Bronze Key", "It's a bronze key", "Key", " There is a bronze key on the floor.", true);
+            Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.", true);
+            Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.", true);
+            Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.", true);
+            Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", " On the ground you see several baseball-sized rocks.", true);
             #endregion
 
             #region Assigning directions for keys to be associated with
@@ -32,7 +32,7 @@ namespace CastleGrimtol.Project
         public List<Enemy> BuildEnemies()
         {
             List<Enemy> EnemyList = new List<Enemy>();
-            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, " You see something large in the distance moving around slowely. Your PipBoy identifies it as a radscorpion: a giant, mutated scorpion that is almost always larger than an adult human, with potent venom.", "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
+            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, " You see something large in the distance moving around slowely. Your PipBoy identifies it as a radscorpion: a giant, mutated scorpion that is almost always larger than an adult human, with potent venom.", " You throw the rock past the radscorpion. It bounces on the ground, the noise it makes is several times louder from the echo. The radscorpion turns it that direction with a hiss and charges off to invesitgate.", "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
             EnemyList.Add(radscorpionRoom7);
             return EnemyList;
         }
@@ -41,14 +41,14 @@ namespace CastleGrimtol.Project
             List<Room> AllRooms = new List<Room>();
             #region Building rooms
 
-            Room room1 = new Room("Vault Cave-in 1", "There is a cave-in on the west side of the cavern. Looking at it fills you with resolve to find a new home for your family.");
+            Room room1 = new Room("Vault Cave-in 1", "There is a cave-in on the west side of the cavern. Looking at it fills you with resolve to find a new home for your family. The only way to go is east.");
             Room room2 = new Room("Vault Cave-in 2", "There is a cave-in to the east. This was likely the way to the exit. You feel a sting of discouragement. You'll have to find another way.");
-            Room room3 = new Room("Vault Cave-in 3", "You find yourself in a narrow corridor with just barely enough room for you to fit through. It's getting darker the further into the cave you go.");
+            Room room3 = new Room("Vault Cave-in 3", "You find yourself in a narrow corridor with just barely enough room for you to fit through. It's getting darker the further into the cave you go. You can continue north or south.");
             Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. You can see a light coming from the east.");
             Room room5 = new Room("Vault Cave-in 5", " ");
-            Room room6 = new Room("Vault Cave-in 6", "There are paths to the north and east.");
+            Room room6 = new Room("Vault Cave-in 6", "The passageway curves. There are paths to the north and east.");
             Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern.");
-            Room room8 = new Room("Vault Cave-in 7", "You didn't die!");
+            Room room8 = new Room("Vault Cave-in 8", "You didn't die!");
 
             #endregion
 
@@ -66,7 +66,7 @@ namespace CastleGrimtol.Project
             room6.Exits.Add("e", room7);
             room7.Exits.Add("w", room6);
             room7.Exits.Add("n", room8);
-            room8.Exits.Add("w", room7);
+            room8.Exits.Add("s", room7);
 
             #endregion
 
