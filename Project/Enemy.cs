@@ -5,17 +5,16 @@ namespace CastleGrimtol.Project
 {
     public class Enemy
     {
-        Random rnd = new Random();
 
         public string Name { get; set; }
-        public int Health { get; set; }
-        public int Damage { get; set; }
+        public bool Pacified { get; set; }
+        public string KillMessage { get; set; }
 
-        public Enemy(string name, int health, int damageMin, int damageMax)
+        public Enemy(string name, bool pacified, string killMessage)
         {
             Name = name;
-            Health = health;
-            Damage = rnd.Next(damageMin, damageMax);
+            Pacified = pacified;
+            KillMessage = killMessage;
         }
     }
 }

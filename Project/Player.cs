@@ -39,7 +39,7 @@ namespace CastleGrimtol.Project
             else
             {
                 System.Console.Clear();
-                System.Console.WriteLine("There is no exit in that direction....dummy...");
+                System.Console.WriteLine("Go where?");
                 return currentRoom;
             }
         }
@@ -71,33 +71,38 @@ namespace CastleGrimtol.Project
                     {
                         currentRoom.Items.Add(currentRoom.SearchableObjects[keyword.Key]);
                         currentRoom.SearchableObjects.Remove(keyword.Key);
+                        if (option == "room")
+                        {
+                            currentRoom.Searched = true;
+                        }
                         return;
                     }
                 }
             }
-            else
+            if (option != "" || option != " ")
             {
                 switch (option)
                 {
                     case "room":
-                        if (currentRoom.SearchDescription == "")
+                        if (currentRoom.Searched == true)
                         {
-                            System.Console.WriteLine("There is nothing notable in this room.");
+                            System.Console.WriteLine("You've already searched this room.");
                         }
                         else if (currentRoom.Searched == false)
                         {
                             currentRoom.Description += currentRoom.SearchDescription;
                             currentRoom.Searched = true;
                         }
-                        else
+                        else if (currentRoom.SearchDescription == "")
                         {
-                            System.Console.WriteLine("You've already searched this room.");
+                            System.Console.WriteLine("There is nothing notable in this room.");
                         }
-                        break;
-
-                    default:
-                        break;
+                        return;
                 }
+            }
+            else
+            {
+                System.Console.WriteLine("Search what?");
             }
         }
         public void Help()

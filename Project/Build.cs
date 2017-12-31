@@ -12,6 +12,7 @@ namespace CastleGrimtol.Project
             Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.");
             Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.");
             Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.");
+            Item rock = new Item("Rock","A baseball-sized rock.","Rock"," On the ground you see several baseball-sized rocks.");
             #endregion
 
             #region Assigning directions for keys to be associated with
@@ -23,11 +24,19 @@ namespace CastleGrimtol.Project
             ItemList.Add(pipBoy);
             ItemList.Add(pistol);
             ItemList.Add(ammo);
+            ItemList.Add(rock);
             #endregion
 
             return ItemList;
         }
-        public List<Room> BuildRooms(List<Item> itemList)
+        public List<Enemy> BuildEnemies()
+        {
+            List<Enemy> EnemyList = new List<Enemy>();
+            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
+            EnemyList.Add(radscorpionRoom7);
+            return EnemyList;
+        }
+        public List<Room> BuildRooms(List<Item> itemList, List<Enemy> enemyList)
         {
             List<Room> AllRooms = new List<Room>();
             #region Building rooms
@@ -38,6 +47,7 @@ namespace CastleGrimtol.Project
             Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. You can see a light coming from the east.");
             Room room5 = new Room("Vault Cave-in 5", " ");
             Room room6 = new Room("Vault Cave-in 6", "Congrats! Room 6!");
+            // Room room7 = new Room("Vault Cave-in 7",);
 
             #endregion
 
@@ -58,11 +68,13 @@ namespace CastleGrimtol.Project
             #endregion
 
             #region Adding locks to rooms
+            room2.Locked.Add("s", true);
             room4.Locked.Add("s", true);
             room4.Locked.Add("w", true);
             #endregion
 
             #region Creating lock messages
+            room2.LockedMessage = "Go where?";
             room4.LockedMessage = "It's too dark to see anything in that direction.";
             #endregion
 
@@ -75,6 +87,11 @@ namespace CastleGrimtol.Project
             Item pipBoy = itemList[1];
             Item pistol = itemList[2];
             Item ammo = itemList[3];
+            Item rock = itemList[4];
+            #endregion
+
+            #region Assigning enemies from enemyList by name for easier readability
+            Enemy radscorpionRoom7 = enemyList[0];
             #endregion
 
             #region Adding items to rooms
@@ -83,7 +100,13 @@ namespace CastleGrimtol.Project
             room5.AddItems(pistol);
             #endregion
 
+            #region Adding enemies to rooms
+            #endregion
+
+            #region Adding dictionaries to room searchable objects
+            room1.SearchableObjects.Add("Room", rock);
             room5.SearchableObjects.Add("Skeleton", ammo);
+            #endregion
 
             #region Adding rooms to AllRooms list
             AllRooms.Add(room1);

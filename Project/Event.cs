@@ -21,8 +21,20 @@ namespace CastleGrimtol.Project
         {
             List<Item> roomItems = new List<Item>();
         }
-        public void RoomSearchCheck(Room room){
-            
+        public void RoomSearchCheck(Room room)
+        {
+            switch (room.Name)
+            {
+                case "Vault Cave-in 2":
+                    if (room.Searched)
+                    {
+                        room.Locked.Remove("s");
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
         public void InventoryCheck(Player currentPlayer, Room room)
         {

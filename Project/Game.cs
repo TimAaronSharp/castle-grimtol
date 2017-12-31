@@ -19,6 +19,7 @@ namespace CastleGrimtol.Project
             bool genderSet = false;
             Build Build = new Build();
             List<Item> itemList = new List<Item>();
+            List<Enemy> enemyList = new List<Enemy>();
 
             System.Console.Write("What is your first name?: ");
             input = Console.ReadLine();
@@ -50,7 +51,8 @@ namespace CastleGrimtol.Project
                 CurrentPlayer = new Player(input, lastName, gender);
             }
             itemList = Build.BuildItems();
-            AllRooms = Build.BuildRooms(itemList);
+            enemyList = Build.BuildEnemies();
+            AllRooms = Build.BuildRooms(itemList, enemyList);
             CurrentRoom = AllRooms[0];
         }
         public void Reset()
@@ -62,24 +64,22 @@ namespace CastleGrimtol.Project
             Setup();
             string input;
             bool running = true;
-            bool introTold = false;
             Event Event = new Event("event", true);
 
             Intro();
 
-            // System.Console.WriteLine("Score: " + CurrentPlayer.Score);
             while (running)
             {
-                // Console.Clear();
-
                 // Event.RoomItemCheck(CurrentRoom);
                 Event.InventoryCheck(CurrentPlayer, CurrentRoom);
+                Event.RoomSearchCheck(CurrentRoom);
 
                 System.Console.WriteLine(CurrentRoom.Name);
-
+                //Checks if there are any items in the room and displays their DescriptionInRoom after the room description, else just displays the room description.
                 if (CurrentRoom.Items.Count > 0)
                 {
                     CurrentPlayer.Look(CurrentRoom);
+
                     for (int i = 0; i < CurrentRoom.Items.Count; i++)
                     {
                         if (i == CurrentRoom.Items.Count - 1)
@@ -169,6 +169,8 @@ namespace CastleGrimtol.Project
                         running = false;
                         break;
                     default:
+                        Console.Clear();
+                        System.Console.WriteLine("I didn't understand that.");
                         break;
                 }
             }

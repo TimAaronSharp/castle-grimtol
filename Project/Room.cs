@@ -10,8 +10,9 @@ namespace CastleGrimtol.Project
         public string LockedMessage { get; set; }
         public string SearchDescription { get; set; }
         public bool Searched { get; set; }
-        public Dictionary<string, bool> Locked;
         public List<Item> Items { get; set; }
+        public List<Enemy> Enemies { get; set; }
+        public Dictionary<string, bool> Locked;
         public Dictionary<string, Room> Exits;
         public Dictionary<string, Item> SearchableObjects;
 
@@ -24,6 +25,10 @@ namespace CastleGrimtol.Project
         public void AddItems(Item addedItem)
         {
             Items.Add(addedItem);
+        }
+        public void AddEnemy(Enemy addedEnemy)
+        {
+            Enemies.Add(addedEnemy);
         }
         public Room(string name, string description)
         {
