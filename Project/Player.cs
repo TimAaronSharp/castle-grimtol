@@ -6,22 +6,23 @@ namespace CastleGrimtol.Project
     {
         public string Name { get; set; }
         public string LastName { get; set; }
-        public int Health { get; set; }
+        public bool Alive { get; set; }
         public int Score { get; set; }
         public string Gender { get; set; }
         public List<Item> Inventory { get; set; }
 
-        public Player(string name, string lastName, string gender)
+        public Player(string name, string lastName, string gender, List<Item> inventory, bool alive)
         {
             Name = name;
             LastName = lastName;
-            Inventory = new List<Item>();
-            Health = 100;
+            Inventory = inventory;
+            Alive = alive;
             Gender = "NA";
             Gender = gender;
         }
-        public Room Go(Room currentRoom, string direction)
+        public Room Go(Player currentPlayer, Room currentRoom, string direction)
         {
+            Event Event = new Event("event", true);
             //given a string direction...
             //check if the currentroom.exits contains a key for direction
 
@@ -32,6 +33,7 @@ namespace CastleGrimtol.Project
             }
             else if (currentRoom.Exits.ContainsKey(direction))
             {
+                Event.DangerCheck(currentPlayer, currentRoom);
                 System.Console.Clear();
                 currentRoom = currentRoom.Exits[direction];
                 return currentRoom;
@@ -57,7 +59,7 @@ namespace CastleGrimtol.Project
         }
         public void Look(Room currentRoom)
         {
-            // System.Console.Clear();
+            System.Console.WriteLine(currentRoom.Name);
             System.Console.WriteLine(currentRoom.Description);
         }
         public void Search(Room currentRoom, string option)
@@ -103,6 +105,20 @@ namespace CastleGrimtol.Project
             else
             {
                 System.Console.WriteLine("Search what?");
+            }
+        }
+        public void UseItem(Player currentPlayer, Room currentRoom, Item item)
+        {
+            switch (item.Type)
+            {
+                case "Key":
+                    System.Console.WriteLine("Hey you used a key brah!");
+
+                    currentRoom.Locked.Remove(item.Direction);
+                    currentPlayer.Inventory.Remove(item);
+                    break;
+                default:
+                    break;
             }
         }
         public void Help()

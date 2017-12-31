@@ -16,6 +16,7 @@ namespace CastleGrimtol.Project
             string input;
             string lastName;
             string gender;
+            List<Item> inventory = new List<Item>();
             bool genderSet = false;
             Build Build = new Build();
             List<Item> itemList = new List<Item>();
@@ -45,10 +46,10 @@ namespace CastleGrimtol.Project
                         genderSet = true;
                         break;
                     default:
-                        System.Console.WriteLine("Are you male or female? (M/F)");
+                        System.Console.Write("Are you male or female? (M/F): ");
                         break;
                 }
-                CurrentPlayer = new Player(input, lastName, gender);
+                CurrentPlayer = new Player(input, lastName, gender, inventory, true);
             }
             itemList = Build.BuildItems();
             enemyList = Build.BuildEnemies();
@@ -70,32 +71,12 @@ namespace CastleGrimtol.Project
 
             while (running)
             {
-                // Event.RoomItemCheck(CurrentRoom);
+                Event.AliveCheck(CurrentPlayer, running);
+                Event.EnemyCheck(CurrentRoom);
                 Event.InventoryCheck(CurrentPlayer, CurrentRoom);
                 Event.RoomSearchCheck(CurrentRoom);
+                Event.RoomItemCheck(CurrentPlayer, CurrentRoom);
 
-                System.Console.WriteLine(CurrentRoom.Name);
-                //Checks if there are any items in the room and displays their DescriptionInRoom after the room description, else just displays the room description.
-                if (CurrentRoom.Items.Count > 0)
-                {
-                    CurrentPlayer.Look(CurrentRoom);
-
-                    for (int i = 0; i < CurrentRoom.Items.Count; i++)
-                    {
-                        if (i == CurrentRoom.Items.Count - 1)
-                        {
-                            System.Console.WriteLine(CurrentRoom.Items[i].DescriptionInRoom);
-                        }
-                        else
-                        {
-                            System.Console.Write(CurrentRoom.Items[i].DescriptionInRoom);
-                        }
-                    }
-                }
-                else
-                {
-                    CurrentPlayer.Look(CurrentRoom);
-                }
                 #region Test code
                 if (CurrentPlayer.Inventory.Count != 0)
                 {
@@ -138,12 +119,13 @@ namespace CastleGrimtol.Project
                         option += " ";
                     }
                 }
+                command.ToLower();
                 option.ToLower();
-                switch (command.ToLower())
+                switch (command)
                 {
                     case "go":
                         Console.Clear();
-                        CurrentRoom = CurrentPlayer.Go(CurrentRoom, option);
+                        CurrentRoom = CurrentPlayer.Go(CurrentPlayer, CurrentRoom, option);
                         break;
                     case "take":
                         Console.Clear();
@@ -180,21 +162,25 @@ namespace CastleGrimtol.Project
             for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
             {
                 Item item = CurrentPlayer.Inventory[i];
-                if (item.Name.ToLower() == itemName.ToLower())
+                if (item.Name == itemName)
                 {
-                    switch (item.Type)
-                    {
-                        case "Key":
-                            System.Console.WriteLine("Hey you used a key brah!");
-
-                            CurrentRoom.Locked.Remove(item.Direction);
-                            CurrentPlayer.Inventory.Remove(item);
-                            break;
-                        default:
-                            break;
-                    }
+                    CurrentPlayer.UseItem(CurrentPlayer, CurrentRoom, item);
+                    return;
                 }
             }
+            for (int i = 0; i < CurrentRoom.Items.Count; i++)
+            {
+                Item item = CurrentRoom.Items[i];
+                if (item.Name == itemName)
+                {
+                    CurrentRoom.UseItem(item);
+                    return;
+                }
+            }
+        }
+        public void ItemCheck()
+        {
+
         }
         public void Intro()
         {

@@ -13,13 +13,32 @@ namespace CastleGrimtol.Project
         {
             Name = name;
             Events = events;
-            // Item pipboy = allItems[0];
-            // Item pistol = allItems[1];
         }
 
-        public void RoomItemCheck(Room room)
+        public void RoomItemCheck(Player currentPlayer, Room currentRoom)
         {
             List<Item> roomItems = new List<Item>();
+            //Checks if there are any items in the room and displays their DescriptionInRoom after the room description, else just displays the room description.
+            if (currentRoom.Items.Count > 0)
+            {
+                currentPlayer.Look(currentRoom);
+
+                for (int i = 0; i < currentRoom.Items.Count; i++)
+                {
+                    if (i == currentRoom.Items.Count - 1)
+                    {
+                        System.Console.WriteLine(currentRoom.Items[i].DescriptionInRoom);
+                    }
+                    else
+                    {
+                        System.Console.Write(currentRoom.Items[i].DescriptionInRoom);
+                    }
+                }
+            }
+            else
+            {
+                currentPlayer.Look(currentRoom);
+            }
         }
         public void RoomSearchCheck(Room room)
         {
@@ -79,26 +98,69 @@ namespace CastleGrimtol.Project
                         break;
                 }
             }
-            // if (!currentPlayer.Inventory.Contains(itemList[1]))
-            // {
-            //     room.Description += "You can see a green light coming from the east.";
-            // }
-            // else if (currentPlayer.Inventory.Contains(itemList[1]))
-            // {
-            //     room.Description = "You see a narrow corridor to the north, a passage to the east, and a passage to the south.";
-            // }
-            // if (!currentPlayer.Inventory.Contains(itemList[1]))
-            // {
-            //     room.Description = "The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit." + room.Description;
-            // }
-            // else if (currentPlayer.Inventory.Contains(itemList[1]))
-            // {
-            //     room.Description = "You see the skeleton of the Vault Dweller on the ground leaning against the wall. In it's hand, resting on the ground, you see it holding a bulky pistol. On closer inspection of the skull you see a hole on the right, lined up with another on it's left. ";
-            // }
-            // else if (currentPlayer.Inventory.Contains(itemList[1]) && currentPlayer.Inventory.Contains(itemList[2]))
-            // {
-            //     room.Description = "You see the skeleton of the Vault Dweller on the ground leaning against the wall. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.";
-            // }
+        }
+        public void EnemyCheck(Room room)
+        {
+            if (room.Enemies.Count > 0)
+            {
+                for (int i = 0; i < room.Enemies.Count; i++)
+                {
+                    Enemy enemy = room.Enemies[i];
+                    room.Description += enemy.Description;
+                }
+            }
+        }
+        public void DangerCheck(Player currentPlayer, Room room)
+        {
+            switch (room.Name)
+            {
+                case "Vault Cave-in 7":
+                    for (int i = 0; i < room.Enemies.Count; i++)
+                    {
+                        Enemy enemy = room.Enemies[i];
+                        switch (enemy.Pacified)
+                        {
+                            case false:
+                                System.Console.WriteLine(enemy.KillMessage);
+                                currentPlayer.Alive = false;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        public bool AliveCheck(Player currentPlayer, bool running)
+        {
+            Game Game = new Game();
+            string input = "";
+            if (currentPlayer.Alive == false)
+            {
+                while (running)
+                {
+                    System.Console.Write("You have died. Would you like to play again? (Y/N): ");
+                    input = System.Console.ReadLine().ToLower();
+
+                    if (input == "y")
+                    {
+                        Game.Reset();
+                        return running;
+                    }
+                    else if (input == "n")
+                    {
+                        running = false;
+                        return running;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return running;
         }
     }
 }

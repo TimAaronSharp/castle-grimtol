@@ -37,6 +37,7 @@ namespace CastleGrimtol.Project
             SearchDescription = "";
             Searched = false;
             Items = new List<Item>();
+            Enemies = new List<Enemy>();
             Exits = new Dictionary<string, Room>();
             Locked = new Dictionary<string, bool>();
             SearchableObjects = new Dictionary<string, Item>();

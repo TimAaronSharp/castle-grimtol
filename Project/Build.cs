@@ -12,7 +12,7 @@ namespace CastleGrimtol.Project
             Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.");
             Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.");
             Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.");
-            Item rock = new Item("Rock","A baseball-sized rock.","Rock"," On the ground you see several baseball-sized rocks.");
+            Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", " On the ground you see several baseball-sized rocks.");
             #endregion
 
             #region Assigning directions for keys to be associated with
@@ -32,7 +32,7 @@ namespace CastleGrimtol.Project
         public List<Enemy> BuildEnemies()
         {
             List<Enemy> EnemyList = new List<Enemy>();
-            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
+            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, " You see something large in the distance moving around slowely. Your PipBoy identifies it as a radscorpion: a giant, mutated scorpion that is almost always larger than an adult human, with potent venom.", "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
             EnemyList.Add(radscorpionRoom7);
             return EnemyList;
         }
@@ -46,8 +46,9 @@ namespace CastleGrimtol.Project
             Room room3 = new Room("Vault Cave-in 3", "You find yourself in a narrow corridor with just barely enough room for you to fit through. It's getting darker the further into the cave you go.");
             Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. You can see a light coming from the east.");
             Room room5 = new Room("Vault Cave-in 5", " ");
-            Room room6 = new Room("Vault Cave-in 6", "Congrats! Room 6!");
-            // Room room7 = new Room("Vault Cave-in 7",);
+            Room room6 = new Room("Vault Cave-in 6", "There are paths to the north and east.");
+            Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern.");
+            Room room8 = new Room("Vault Cave-in 7", "You didn't die!");
 
             #endregion
 
@@ -57,14 +58,16 @@ namespace CastleGrimtol.Project
             room2.Exits.Add("s", room3);
             room3.Exits.Add("n", room2);
             room3.Exits.Add("s", room4);
-
             room4.Exits.Add("n", room3);
             room4.Exits.Add("e", room5);
             room4.Exits.Add("s", room6);
-
             room5.Exits.Add("w", room4);
-
             room6.Exits.Add("n", room4);
+            room6.Exits.Add("e", room7);
+            room7.Exits.Add("w", room6);
+            room7.Exits.Add("n", room8);
+            room8.Exits.Add("w", room7);
+
             #endregion
 
             #region Adding locks to rooms
@@ -101,11 +104,12 @@ namespace CastleGrimtol.Project
             #endregion
 
             #region Adding enemies to rooms
+            room7.AddEnemy(radscorpionRoom7);
             #endregion
 
             #region Adding dictionaries to room searchable objects
             room1.SearchableObjects.Add("Room", rock);
-            room5.SearchableObjects.Add("Skeleton", ammo);
+            // room5.SearchableObjects.Add("Skeleton", ammo);
             #endregion
 
             #region Adding rooms to AllRooms list
