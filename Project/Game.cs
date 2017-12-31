@@ -58,7 +58,7 @@ namespace CastleGrimtol.Project
         }
         public void Reset()
         {
-            Setup();
+            GameLoop();
         }
         public void GameLoop()
         {
@@ -71,7 +71,6 @@ namespace CastleGrimtol.Project
 
             while (running)
             {
-                Event.AliveCheck(CurrentPlayer, running);
                 Event.EnemyCheck(CurrentRoom);
                 Event.InventoryCheck(CurrentPlayer, CurrentRoom);
                 Event.RoomSearchCheck(CurrentRoom);
@@ -155,6 +154,7 @@ namespace CastleGrimtol.Project
                         System.Console.WriteLine("I didn't understand that.");
                         break;
                 }
+                running = Event.AliveCheck(CurrentPlayer, running);
             }
         }
         public void UseItem(string itemName)

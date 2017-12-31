@@ -110,7 +110,7 @@ namespace CastleGrimtol.Project
                 }
             }
         }
-        public void DangerCheck(Player currentPlayer, Room room)
+        public bool DangerCheck(Player currentPlayer, Room room)
         {
             switch (room.Name)
             {
@@ -123,14 +123,14 @@ namespace CastleGrimtol.Project
                             case false:
                                 System.Console.WriteLine(enemy.KillMessage);
                                 currentPlayer.Alive = false;
-                                break;
+                                return currentPlayer.Alive;
                             default:
                                 break;
                         }
                     }
-                    break;
+                    return currentPlayer.Alive;
                 default:
-                    break;
+                    return currentPlayer.Alive;
             }
         }
         public bool AliveCheck(Player currentPlayer, bool running)
@@ -141,22 +141,19 @@ namespace CastleGrimtol.Project
             {
                 while (running)
                 {
-                    System.Console.Write("You have died. Would you like to play again? (Y/N): ");
+                    System.Console.Write(currentPlayer.RestartText);
                     input = System.Console.ReadLine().ToLower();
 
-                    if (input == "y")
+                    switch (input)
                     {
-                        Game.Reset();
-                        return running;
-                    }
-                    else if (input == "n")
-                    {
-                        running = false;
-                        return running;
-                    }
-                    else
-                    {
-                        continue;
+                        case "y":
+                            Game.Reset();
+                            return running;
+                        case "n":
+                            running = false;
+                            return running;
+                        default:
+                            continue;
                     }
                 }
             }

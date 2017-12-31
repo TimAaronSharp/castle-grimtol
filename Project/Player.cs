@@ -10,6 +10,7 @@ namespace CastleGrimtol.Project
         public int Score { get; set; }
         public string Gender { get; set; }
         public List<Item> Inventory { get; set; }
+        public string RestartText { get; set; }
 
         public Player(string name, string lastName, string gender, List<Item> inventory, bool alive)
         {
@@ -19,9 +20,11 @@ namespace CastleGrimtol.Project
             Alive = alive;
             Gender = "NA";
             Gender = gender;
+            RestartText = "You have died. Would you like to play again? (Y/N): ";
         }
         public Room Go(Player currentPlayer, Room currentRoom, string direction)
         {
+            bool isAlive = true;
             Event Event = new Event("event", true);
             //given a string direction...
             //check if the currentroom.exits contains a key for direction
@@ -33,9 +36,13 @@ namespace CastleGrimtol.Project
             }
             else if (currentRoom.Exits.ContainsKey(direction))
             {
-                Event.DangerCheck(currentPlayer, currentRoom);
                 System.Console.Clear();
-                currentRoom = currentRoom.Exits[direction];
+                isAlive = Event.DangerCheck(currentPlayer, currentRoom);
+                if (isAlive)
+                {
+                    currentRoom = currentRoom.Exits[direction];
+                    return currentRoom;
+                }
                 return currentRoom;
             }
             else
