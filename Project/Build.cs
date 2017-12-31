@@ -32,7 +32,12 @@ namespace CastleGrimtol.Project
         public List<Enemy> BuildEnemies()
         {
             List<Enemy> EnemyList = new List<Enemy>();
-            Enemy radscorpionRoom7 = new Enemy("Radscorpion", false, " You see something large in the distance moving around slowely. Your PipBoy identifies it as a radscorpion: a giant, mutated scorpion that is almost always larger than an adult human, with potent venom.", " You throw the rock past the radscorpion. It bounces on the ground, the noise it makes is several times louder from the echo. The radscorpion turns it that direction with a hiss and charges off to invesitgate.", "As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.");
+            //string NAME, bool PACIFIED, string DESCRIPTION, string KILLMESSAGE, string PACIFIEDMESSAGE, string DYINGMESSAGE, string DEADMESSAGE
+            Enemy radscorpionRoom7 = new Enemy(/*NAME*/"Radscorpion",/*PACIFIED*/false, /*DESCRIPTION*/" You see something large in the distance moving around slowely. Your PipBoy identifies it as a radscorpion: a giant, mutated scorpion that is almost always larger than an adult human, with potent venom.",
+            /*KILLMESSAGE*/"As you move into the room you accidently kick a rock. The radscorpion turns your direction with a hiss, clicking it's claws, rushing toward you. You turn to run but before you get far you feel a sharp pain in each arm as the radscorpion's claws clamp down, their hooks sinking in and holding you firm. Next you feel as though several burning knives are stabbed in your back as the radscorpion stings you several times in the back with it's venomous stinger. Soon the hot pain begins to dull to a soft warmth as your body starts to numb and your conciousness fades.",
+            /*PACIFIEDMESSAGE*/"You throw the rock past the radscorpion. It bounces on the ground, the noise it makes is several times louder from the echo. The radscorpion turns it that direction with a hiss and charges off to invesitgate.",
+            /*DYINGMESSAGE*/"You take aim at the radscorpion with the pistol and fire. It recoils, turns your way with an angry hiss, and charges you. You fire off several more shots, not all bullets finding their mark. Fear starts to overcome you as the radscorpion closes in on you, then finally it crumples in a heap on the ground, twitching violently, then slowely stills. You remember to start breathing again and start taking several deep gulps of air. You take a moment to let the adrenaline fade through your system and for your nerves to calm.",
+            /*DEADMESSAGE*/" The radscorpion lies dead on the ground.");
             EnemyList.Add(radscorpionRoom7);
             return EnemyList;
         }
@@ -109,7 +114,7 @@ namespace CastleGrimtol.Project
 
             #region Adding dictionaries to room searchable objects
             room1.SearchableObjects.Add("Room", rock);
-            // room5.SearchableObjects.Add("Skeleton", ammo);
+            room5.SearchableObjects.Add("Skeleton", ammo);
             #endregion
 
             #region Adding rooms to AllRooms list

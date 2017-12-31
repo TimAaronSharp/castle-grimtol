@@ -77,35 +77,35 @@ namespace CastleGrimtol.Project
                 Event.RoomItemCheck(CurrentPlayer, CurrentRoom);
 
                 #region Test code
-                if (CurrentPlayer.Inventory.Count != 0)
-                {
-                    System.Console.WriteLine("Inventory:");
-                    for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
-                    {
-                        System.Console.WriteLine($@"
-                Item Name: {CurrentPlayer.Inventory[i].Name}
-                Item Description: {CurrentPlayer.Inventory[i].Description}");
-                    }
-                }
-                if (CurrentRoom.Items.Count != 0)
-                {
-                    System.Console.WriteLine("Room Items: ");
-                    for (int i = 0; i < CurrentRoom.Items.Count; i++)
-                    {
-                        System.Console.WriteLine($@"
-                Item Name: {CurrentRoom.Items[i].Name}
-                Item Description: {CurrentRoom.Items[i].Description}");
-                    }
-                }
-                if (CurrentRoom.SearchableObjects.Count > 0)
-                {
-                    foreach (var searchable in CurrentRoom.SearchableObjects)
-                    {
-                        System.Console.WriteLine($@"Searchable Objects: {searchable.Key}");
-                    }
-                }
+                // if (CurrentPlayer.Inventory.Count != 0)
+                // {
+                //     System.Console.WriteLine("Inventory:");
+                //     for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
+                //     {
+                //         System.Console.WriteLine($@"
+                // Item Name: {CurrentPlayer.Inventory[i].Name}
+                // Item Description: {CurrentPlayer.Inventory[i].Description}");
+                //     }
+                // }
+                // if (CurrentRoom.Items.Count != 0)
+                // {
+                //     System.Console.WriteLine("Room Items: ");
+                //     for (int i = 0; i < CurrentRoom.Items.Count; i++)
+                //     {
+                //         System.Console.WriteLine($@"
+                // Item Name: {CurrentRoom.Items[i].Name}
+                // Item Description: {CurrentRoom.Items[i].Description}");
+                //     }
+                // }
+                // if (CurrentRoom.SearchableObjects.Count > 0)
+                // {
+                //     foreach (var searchable in CurrentRoom.SearchableObjects)
+                //     {
+                //         System.Console.WriteLine($@"Searchable Objects: {searchable.Key}");
+                //     }
+                // }
                 #endregion
-
+                System.Console.Write("What would you like to do?: ");
                 input = Console.ReadLine();
                 string[] inputArr = input.Split(' ');
                 string command = inputArr[0];

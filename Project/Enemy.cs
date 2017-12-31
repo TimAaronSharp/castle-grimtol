@@ -12,15 +12,19 @@ namespace CastleGrimtol.Project
         public string Description { get; set; }
         public string PacifiedMessage { get; set; }
         public string KillMessage { get; set; }
+        public string DyingMessage { get; set; }
+        public string DeadMessage { get; set; }
 
-        public Enemy(string name, bool pacified, string description, string pacifiedMessage, string killMessage)
+        public Enemy(string name, bool pacified, string description, string killMessage, string pacifiedMessage, string dyingMessage, string deadMessage)
         {
             Name = name;
             Pacified = pacified;
             Dead = false;
             Description = description;
-            PacifiedMessage = pacifiedMessage;
             KillMessage = killMessage;
+            PacifiedMessage = pacifiedMessage;
+            DyingMessage = dyingMessage;
+            DeadMessage = deadMessage;
 
         }
     }

@@ -62,14 +62,23 @@ namespace CastleGrimtol.Project
                 {
                     switch (currentRoom.Name)
                     {
+
                         case "Vault Cave-in 7":
                             currentRoom.Description = currentRoom.DefaultDescription;
                             for (int i = 0; i < currentRoom.Enemies.Count; i++)
                             {
                                 Enemy enemy = currentRoom.Enemies[i];
-                                enemy.Pacified = false;
-                                currentRoom.EnemyDescribed = false;
+                                if (enemy.Dead == false)
+                                {
+                                    enemy.Pacified = false;
+                                    currentRoom.EnemyDescribed = false;
+                                }
+                                else
+                                {
+                                    currentRoom.Description += enemy.DeadMessage;
+                                }
                             }
+
                             break;
                         default:
                             break;
@@ -161,7 +170,8 @@ namespace CastleGrimtol.Project
         }
         public void UseItem(Player currentPlayer, Room currentRoom, Item item)
         {
-            Enemy enemy = new Enemy("", false, "", "", "");
+            Enemy enemy = new Enemy("", false, "", "", "", "", "");
+            Item inventoryItem = new Item("", "", "", "", true);
             switch (item.Name.ToLower())
             {
                 case "rock":
@@ -182,12 +192,33 @@ namespace CastleGrimtol.Project
                             break;
                     }
                     break;
-                    case "pistol":
-                        for (int i = 0; i < currentPlayer.Inventory.Count; i++)
-                        {
-                        
-                            
-                        }
+                case "pistol":
+                    switch (currentRoom.Name)
+                    {
+                        case "Vault Cave-in 7":
+                            for (int i = 0; i < currentPlayer.Inventory.Count; i++)
+                            {
+                                inventoryItem = currentPlayer.Inventory[i];
+                                for (int j = 0; j < currentRoom.Enemies.Count; j++)
+                                {
+                                    enemy = currentRoom.Enemies[j];
+
+                                    switch (inventoryItem.Name)
+                                    {
+                                        case "Ammo":
+                                            currentRoom.Description = enemy.DyingMessage;
+                                            enemy.Pacified = true;
+                                            enemy.Dead = true;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
