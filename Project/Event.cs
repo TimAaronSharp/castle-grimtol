@@ -107,7 +107,7 @@ namespace CastleGrimtol.Project
                 for (int i = 0; i < room.Enemies.Count; i++)
                 {
                     Enemy enemy = room.Enemies[i];
-                    if (room.EnemyDescribed == false)
+                    if (room.EnemyDescribed == false && enemy.Dead == false)
                     {
                         room.EnemyDescribed = true;
                         if (enemy.Pacified == false)
@@ -116,9 +116,12 @@ namespace CastleGrimtol.Project
                             // System.Console.WriteLine("THIS IS THE DEFAULT DESCRIPTION: " + room.DefaultDescription);
                         }
                     }
+                    else if (enemy.Dead)
+                    {
+                        room.Description += enemy.DeadMessage;
+                    }
                     else
                     {
-                        System.Console.WriteLine("THIS IS THE DEFAULT DESCRIPTION: " + room.DefaultDescription);
                         room.Description = room.DefaultDescription;
                     }
                 }

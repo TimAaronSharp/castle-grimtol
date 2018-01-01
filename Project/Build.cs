@@ -13,6 +13,7 @@ namespace CastleGrimtol.Project
             Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.", "You never had much experience with guns living in the Vault. You excitedly look it over, examining every part of it. You look down the barrel of the gun to see what it looks like inside. Your thumb accidently pulls the trigger. ", true);
             Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.", "", true);
             Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", " On the ground you see several baseball-sized rocks.", "You threw the rock as hard as you could and it shattered against the wall.", true);
+            Item terminal = new Item("Terminal", "A terminal that operates the Vault door", "Termimal", " You see a command terminal to your right.", "", false);
             #endregion
 
             #region Assigning directions for keys to be associated with
@@ -25,6 +26,7 @@ namespace CastleGrimtol.Project
             ItemList.Add(pistol);
             ItemList.Add(ammo);
             ItemList.Add(rock);
+            ItemList.Add(terminal);
             #endregion
 
             return ItemList;
@@ -53,7 +55,9 @@ namespace CastleGrimtol.Project
             Room room5 = new Room("Vault Cave-in 5", " ");
             Room room6 = new Room("Vault Cave-in 6", "The passageway curves. There are paths to the north and east.");
             Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern.");
-            Room room8 = new Room("Vault Cave-in 8", "You didn't die!");
+            Room room8 = new Room("Vault Cave-in 8", "There is a cave-in on the west side of the cavern. You think it is probably the cave-in that blocked your way when you started. There are passageways south and east.");
+            Room room9 = new Room("Vault Cave-in 9", "You finally see the Vault door on the east side of the cavern, a giant gear shaped door. You can go back west to go further into the cave.");
+            Room room10 = new Room("Surface", "You made it to the surface! Finally you can really start your journey to find a new home for your family. Thanks for completing the shareware version of this game! Purchase the full game to continue your adventure! Purchase the season pass to get access to the 3 expansion DLC when they release for $59.99! Purchase the Stylin' Vault Dweller packs for $9.99 each to show the denizens of the wasteland that just because the world has gone to hell, that doesn't mean you can't still look good!");
 
             #endregion
 
@@ -72,6 +76,10 @@ namespace CastleGrimtol.Project
             room7.Exits.Add("w", room6);
             room7.Exits.Add("n", room8);
             room8.Exits.Add("s", room7);
+            room8.Exits.Add("e", room9);
+            room9.Exits.Add("w", room8);
+            room9.Exits.Add("e", room10);
+
 
             #endregion
 
@@ -79,11 +87,13 @@ namespace CastleGrimtol.Project
             room2.Locked.Add("s", true);
             room4.Locked.Add("s", true);
             room4.Locked.Add("w", true);
+            room9.Locked.Add("e", true);
             #endregion
 
             #region Creating lock messages
             room2.LockedMessage = "Go where?";
             room4.LockedMessage = "It's too dark to see anything in that direction.";
+            room9.LockedMessage = "The Vault door is still closed.";
             #endregion
 
             #region Creating search descriptions
@@ -96,6 +106,7 @@ namespace CastleGrimtol.Project
             Item pistol = itemList[2];
             Item ammo = itemList[3];
             Item rock = itemList[4];
+            Item terminal = itemList[5];
             #endregion
 
             #region Assigning enemies from enemyList by name for easier readability
@@ -106,6 +117,7 @@ namespace CastleGrimtol.Project
             // room2.AddItems(bronzeKey);
             room5.AddItems(pipBoy);
             room5.AddItems(pistol);
+            room9.AddItems(terminal);
             #endregion
 
             #region Adding enemies to rooms
