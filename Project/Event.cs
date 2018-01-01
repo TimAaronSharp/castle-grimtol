@@ -107,18 +107,21 @@ namespace CastleGrimtol.Project
                 for (int i = 0; i < room.Enemies.Count; i++)
                 {
                     Enemy enemy = room.Enemies[i];
-                    if (enemy.Pacified == false && room.EnemyDescribed == false)
+                    if (room.EnemyDescribed == false)
                     {
-                        room.Description += enemy.Description;
                         room.EnemyDescribed = true;
-
+                        if (enemy.Pacified == false)
+                        {
+                            room.Description += enemy.Description;
+                            // System.Console.WriteLine("THIS IS THE DEFAULT DESCRIPTION: " + room.DefaultDescription);
+                        }
                     }
-
+                    else
+                    {
+                        System.Console.WriteLine("THIS IS THE DEFAULT DESCRIPTION: " + room.DefaultDescription);
+                        room.Description = room.DefaultDescription;
+                    }
                 }
-            }
-            else
-            {
-                room.Description = room.DefaultDescription;
             }
         }
         public bool DangerCheck(Player currentPlayer, Room room, string direction)

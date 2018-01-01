@@ -63,7 +63,6 @@ namespace CastleGrimtol.Project
                 {
                     switch (currentRoom.Name)
                     {
-
                         case "Vault Cave-in 7":
                             currentRoom.Description = currentRoom.DefaultDescription;
                             for (int i = 0; i < currentRoom.Enemies.Count; i++)
@@ -79,7 +78,6 @@ namespace CastleGrimtol.Project
                                     currentRoom.Description += enemy.DeadMessage;
                                 }
                             }
-
                             break;
                         default:
                             break;
@@ -121,8 +119,10 @@ namespace CastleGrimtol.Project
         }
         public void Look(Room currentRoom)
         {
-            System.Console.WriteLine(currentRoom.Name);
-            System.Console.WriteLine(currentRoom.Description);
+            System.Console.WriteLine($@"
+ {currentRoom.Name}
+
+ {currentRoom.Description}");
         }
         public void Search(Room currentRoom, string option)
         {
@@ -194,7 +194,7 @@ namespace CastleGrimtol.Project
                                 System.Console.Write(Game.EnterKey);
                                 System.Console.ReadLine();
                             }
-                            break;
+                            return;
                         default:
                             System.Console.WriteLine(item.BadUse);
                             currentPlayer.Inventory.Remove(item);
