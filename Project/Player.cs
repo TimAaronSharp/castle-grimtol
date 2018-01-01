@@ -12,6 +12,7 @@ namespace CastleGrimtol.Project
         public string Gender { get; set; }
         public Room PreviousRoom { get; set; }
         public string RestartText { get; set; }
+        Game Game = new Game();
 
         public Player(string name, string lastName, string gender, List<Item> inventory, bool alive)
         {
@@ -134,6 +135,9 @@ namespace CastleGrimtol.Project
                     {
                         currentRoom.Items.Add(currentRoom.SearchableObjects[keyword.Key]);
                         currentRoom.SearchableObjects.Remove(keyword.Key);
+                        System.Console.WriteLine(keyword.Value.DescriptionInRoom);
+                        System.Console.Write(Game.EnterKey);
+                        System.Console.ReadLine();
                         if (option == "room")
                         {
                             currentRoom.Searched = true;
@@ -155,6 +159,9 @@ namespace CastleGrimtol.Project
                         {
                             currentRoom.Description += currentRoom.SearchDescription;
                             currentRoom.Searched = true;
+                            System.Console.WriteLine(currentRoom.SearchDescription);
+                            System.Console.Write(Game.EnterKey);
+                            System.Console.ReadLine();
                         }
                         else if (currentRoom.SearchDescription == "")
                         {
@@ -171,7 +178,7 @@ namespace CastleGrimtol.Project
         public void UseItem(Player currentPlayer, Room currentRoom, Item item)
         {
             Enemy enemy = new Enemy("", false, "", "", "", "", "");
-            Item inventoryItem = new Item("", "", "", "", true);
+            Item inventoryItem = new Item("", "", "", "", "", true);
             switch (item.Name.ToLower())
             {
                 case "rock":
@@ -182,41 +189,76 @@ namespace CastleGrimtol.Project
                             {
                                 enemy = currentRoom.Enemies[i];
                                 enemy.Pacified = true;
-                                currentRoom.Description = enemy.PacifiedMessage;
+                                System.Console.WriteLine(enemy.PacifiedMessage);
                                 currentPlayer.Inventory.Remove(item);
+                                System.Console.Write(Game.EnterKey);
+                                System.Console.ReadLine();
                             }
                             break;
                         default:
-                            currentRoom.Description = "You threw the rock as hard as you could and it shattered against the wall.";
+                            System.Console.WriteLine(item.BadUse);
                             currentPlayer.Inventory.Remove(item);
+                            System.Console.Write(Game.EnterKey);
+                            System.Console.ReadLine();
                             break;
                     }
                     break;
                 case "pistol":
+                    bool hasAmmo = false;
+                    for (int i = 0; i < currentPlayer.Inventory.Count; i++)
+                    {
+                        inventoryItem = currentPlayer.Inventory[i];
+
+                        switch (inventoryItem.Name)
+                        {
+                            case "Ammo":
+                                hasAmmo = true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     switch (currentRoom.Name)
                     {
                         case "Vault Cave-in 7":
-                            for (int i = 0; i < currentPlayer.Inventory.Count; i++)
+                            for (int j = 0; j < currentRoom.Enemies.Count; j++)
                             {
-                                inventoryItem = currentPlayer.Inventory[i];
-                                for (int j = 0; j < currentRoom.Enemies.Count; j++)
-                                {
-                                    enemy = currentRoom.Enemies[j];
+                                enemy = currentRoom.Enemies[j];
 
-                                    switch (inventoryItem.Name)
-                                    {
-                                        case "Ammo":
-                                            currentRoom.Description = enemy.DyingMessage;
-                                            enemy.Pacified = true;
-                                            enemy.Dead = true;
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                switch (hasAmmo)
+                                {
+                                    case true:
+                                        System.Console.WriteLine(enemy.DyingMessage);
+                                        enemy.Pacified = true;
+                                        enemy.Dead = true;
+                                        System.Console.Write(Game.EnterKey);
+                                        System.Console.ReadLine();
+                                        return;
+                                    default:
+                                        System.Console.WriteLine("You take aim at the radscorpion with the pistol and fire. Click...... Click, click, click..... The pistol isn't loaded...." + enemy.KillMessage);
+                                        System.Console.Write(Game.EnterKey);
+                                        System.Console.ReadLine();
+                                        currentPlayer.Alive = false;
+                                        break;
                                 }
                             }
                             break;
                         default:
+                            switch (hasAmmo)
+                            {
+                                case true:
+                                    System.Console.WriteLine(item.BadUse + "The last thing you hear is a loud bang. You shot your eye out. And your brains.");
+                                    currentPlayer.Alive = false;
+                                    System.Console.Write(Game.EnterKey);
+                                    System.Console.ReadLine();
+                                    break;
+
+                                default:
+                                    System.Console.WriteLine(item.BadUse + "You hear a click. Good thing it wasn't loaded. You cautiously put the gun away.");
+                                    System.Console.Write(Game.EnterKey);
+                                    System.Console.ReadLine();
+                                    break;
+                            }
                             break;
                     }
                     break;

@@ -7,6 +7,7 @@ namespace CastleGrimtol.Project
         public string Name { get; set; }
 
         public bool Events { get; set; }
+        Game Game = new Game();
 
 
         public Event(string name, bool events)
@@ -101,14 +102,23 @@ namespace CastleGrimtol.Project
         }
         public void EnemyCheck(Room room)
         {
-            if (room.Enemies.Count > 0 && room.EnemyDescribed == false)
+            if (room.Enemies.Count > 0)
             {
                 for (int i = 0; i < room.Enemies.Count; i++)
                 {
                     Enemy enemy = room.Enemies[i];
-                    room.Description += enemy.Description;
-                    room.EnemyDescribed = true;
+                    if (enemy.Pacified == false && room.EnemyDescribed == false)
+                    {
+                        room.Description += enemy.Description;
+                        room.EnemyDescribed = true;
+
+                    }
+
                 }
+            }
+            else
+            {
+                room.Description = room.DefaultDescription;
             }
         }
         public bool DangerCheck(Player currentPlayer, Room room, string direction)
@@ -125,7 +135,9 @@ namespace CastleGrimtol.Project
                             {
                                 case false:
 
-                                    System.Console.WriteLine(enemy.KillMessage);
+                                    System.Console.WriteLine("As you move into the room you accidently kick a rock." + enemy.KillMessage);
+                                    System.Console.Write(Game.EnterKey);
+                                    System.Console.ReadLine();
                                     currentPlayer.Alive = false;
                                     return currentPlayer.Alive;
                                 default:
@@ -140,7 +152,7 @@ namespace CastleGrimtol.Project
         }
         public bool AliveCheck(Player currentPlayer, bool running)
         {
-            Game Game = new Game();
+
             string input = "";
             if (currentPlayer.Alive == false)
             {

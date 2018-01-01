@@ -8,6 +8,7 @@ namespace CastleGrimtol.Project
         public Room CurrentRoom { get; set; }
         public Player CurrentPlayer { get; set; }
         public List<Room> AllRooms = new List<Room>();
+        public string EnterKey = "Press Enter to continue.";
 
         public void Setup()
         {
