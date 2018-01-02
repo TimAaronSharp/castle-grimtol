@@ -12,7 +12,7 @@ namespace CastleGrimtol.Project
             Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.", "", true);
             Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.", "You never had much experience with guns living in the Vault. You excitedly look it over, examining every part of it. You look down the barrel of the gun to see what it looks like inside. Your thumb accidently pulls the trigger. ", true);
             Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.", "", true);
-            Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", " On the ground you see several baseball-sized rocks.", "You threw the rock as hard as you could and it shattered against the wall.", true);
+            Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", "On the ground you see several baseball-sized rocks.", "You threw the rock as hard as you could and it shattered against the wall.", true);
             Item terminal = new Item("Terminal", "A terminal that operates the Vault door", "Termimal", " You see a command terminal to your right.", "", false);
             #endregion
 
@@ -52,12 +52,12 @@ namespace CastleGrimtol.Project
             Room room2 = new Room("Vault Cave-in 2", "There is a cave-in to the east. This was likely the way to the exit. You feel a sting of discouragement. You'll have to find another way.");
             Room room3 = new Room("Vault Cave-in 3", "You find yourself in a narrow corridor with just barely enough room for you to fit through. It's getting darker the further into the cave you go. You can continue north or south.");
             Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. You can see a light coming from the east.");
-            Room room5 = new Room("Vault Cave-in 5", " ");
+            Room room5 = new Room("Vault Cave-in 5", "");
             Room room6 = new Room("Vault Cave-in 6", "The passageway curves. There are paths to the north and east.");
             Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern.");
             Room room8 = new Room("Vault Cave-in 8", "There is a cave-in on the west side of the cavern. You think it is probably the cave-in that blocked your way when you started. There are passageways south and east.");
             Room room9 = new Room("Vault Cave-in 9", "You finally see the Vault door on the east side of the cavern, a giant gear shaped door. You can go back west to go further into the cave.");
-            Room room10 = new Room("Surface", "You made it to the surface! Finally you can really start your journey to find a new home for your family. Thanks for completing the shareware version of this game! Purchase the full game to continue your adventure! Purchase the season pass to get access to the 3 expansion DLC when they release for $59.99! Purchase the Stylin' Vault Dweller packs for $9.99 each to show the denizens of the wasteland that just because the world has gone to hell, that doesn't mean you can't still look good!");
+            Room room10 = new Room("Surface", "");
 
             #endregion
 
@@ -98,6 +98,7 @@ namespace CastleGrimtol.Project
 
             #region Creating search descriptions
             room2.SearchDescription = " It's so small that you almost missed it, but you notice a narrow passageway to the south.";
+            room5.SearchDescription = "There is a skeleton leaning against the wall.";
             #endregion
 
             #region Assigning items from itemList by name for easier readability
@@ -127,6 +128,7 @@ namespace CastleGrimtol.Project
             #region Adding dictionaries to room searchable objects
             room1.SearchableObjects.Add("Room", rock);
             room5.SearchableObjects.Add("Skeleton", ammo);
+            room8.SearchableObjects.Add("Room", rock);
             #endregion
 
             #region Adding rooms to AllRooms list

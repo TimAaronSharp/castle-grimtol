@@ -25,7 +25,6 @@ namespace CastleGrimtol.Project
             PacifiedMessage = pacifiedMessage;
             DyingMessage = dyingMessage;
             DeadMessage = deadMessage;
-
         }
     }
 }

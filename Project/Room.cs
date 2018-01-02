@@ -22,20 +22,16 @@ namespace CastleGrimtol.Project
 
         public void UseItem(Item item)
         {
-            System.Console.WriteLine("I made it to room.UseItem");
-            System.Console.ReadLine();
+            Game Game = new Game();
             switch (Name)
             {
                 case "Vault Cave-in 9":
-                    System.Console.WriteLine("I made it to " + Name);
-                    System.Console.ReadLine();
                     switch (item.Name)
                     {
                         case "Terminal":
-                            System.Console.WriteLine("I made it to " + item.Name);
-                            System.Console.ReadLine();
-                            System.Console.WriteLine("Using a cable from the console, you connect your PipBoy and begin to navigate the menus. You eventually find an option to \"Break seal and open Vault door\". You select it with some trepidation. You'll be completely on your own in a brand new world. Your brain is flooded with a mixture of excitement and fear. The cavern is filled with the thunderous chorus of machines coming to life for the first time in centuries. Claxons firing off warnings as machinery moves around. A large mechanical arm descends from the ceiling and inserts itself in to a socket in the middle of the door. You hear some thuds as it clamps itself to the door. Your ears are assaulted by metallic shrieks as the arm starts to pull the door inward and then rolls to the side. You are forced to shield your eyes from the sudden rush of light into the cavern. After a moment they start to adjust and you can make out some features outside. What was that giant blue thing in the sky called? Sky? Living in the vault your whole life you've never seen it before except in books and videos.");
-                            Description = "Your future awaits you outside the vault to the east. You can also go back west to go further into the cave.";
+                            System.Console.WriteLine("Using a cable from the console, you connect your PipBoy and begin to navigate the menus. You eventually find an option to \"Break seal and open Vault door\". You select it with some trepidation. You'll be completely on your own in a brand new world. Your brain is flooded with a mixture of excitement and fear. The cavern is filled with the thunderous chorus of machines coming to life for the first time in centuries. Claxons firing off warnings as machinery moves around. A large mechanical arm descends from the ceiling and inserts itself in to a socket in the middle of the door. You hear some thuds as it clamps itself to the door. Your ears are assaulted by metallic shrieks as the arm starts to pull the door inward and then rolls to the side. You are forced to shield your eyes from the sudden rush of light into the cavern. After a moment they start to adjust and you can make out some features outside. What was that giant blue thing in the sky called? Sky? Living in the vault your whole life you've never seen it before except in books and videos.\n\n\n");
+                            Game.EnterToContinue();
+                            Description = "Your future awaits you outside the vault to the east. You can also go back west to go further into the cave.\n\n\n";
                             Locked.Remove("e");
                             break;
                         default:

@@ -7,9 +7,7 @@ namespace CastleGrimtol.Project
         public string Name { get; set; }
 
         public bool Events { get; set; }
-        Game Game = new Game();
-
-
+        public int MyProperty { get; set; }
         public Event(string name, bool events)
         {
             Name = name;
@@ -113,12 +111,11 @@ namespace CastleGrimtol.Project
                         if (enemy.Pacified == false)
                         {
                             room.Description += enemy.Description;
-                            // System.Console.WriteLine("THIS IS THE DEFAULT DESCRIPTION: " + room.DefaultDescription);
                         }
                     }
                     else if (enemy.Dead)
                     {
-                        room.Description += enemy.DeadMessage;
+                        room.Description = room.DefaultDescription + enemy.DeadMessage;
                     }
                     else
                     {
@@ -140,10 +137,8 @@ namespace CastleGrimtol.Project
                             switch (enemy.Pacified)
                             {
                                 case false:
-
                                     System.Console.WriteLine("As you move into the room you accidently kick a rock." + enemy.KillMessage);
-                                    System.Console.Write(Game.EnterKey);
-                                    System.Console.ReadLine();
+                                    EnterToContinue();
                                     currentPlayer.Alive = false;
                                     return currentPlayer.Alive;
                                 default:
@@ -158,11 +153,12 @@ namespace CastleGrimtol.Project
         }
         public bool AliveCheck(Player currentPlayer, bool running)
         {
-
+            bool playAgainCheck = true;
             string input = "";
+            // System.Console.WriteLine("Are you alive?: " + currentPlayer.Alive);
             if (currentPlayer.Alive == false)
             {
-                while (running)
+                while (playAgainCheck)
                 {
                     System.Console.Write(currentPlayer.RestartText);
                     input = System.Console.ReadLine().ToLower();
@@ -170,9 +166,10 @@ namespace CastleGrimtol.Project
                     switch (input)
                     {
                         case "y":
-                            Game.Reset();
+                            playAgainCheck = false;
                             return running;
                         case "n":
+                            playAgainCheck = false;
                             running = false;
                             return running;
                         default:
@@ -181,6 +178,15 @@ namespace CastleGrimtol.Project
                 }
             }
             return running;
+        }
+        public bool RunReset()
+        {
+            return true;
+        }
+        public void EnterToContinue()
+        {
+            System.Console.WriteLine("Press Enter to continue.");
+            System.Console.ReadLine();
         }
     }
 }

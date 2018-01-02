@@ -8,50 +8,16 @@ namespace CastleGrimtol.Project
         public Room CurrentRoom { get; set; }
         public Player CurrentPlayer { get; set; }
         public List<Room> AllRooms = new List<Room>();
-        public string EnterKey = "Press Enter to continue.";
 
         public void Setup()
         {
-            Console.Clear();
-
-            string input;
-            string lastName;
-            string gender;
             List<Item> inventory = new List<Item>();
-            bool genderSet = false;
-            Build Build = new Build();
             List<Item> itemList = new List<Item>();
             List<Enemy> enemyList = new List<Enemy>();
+            Build Build = new Build();
 
-            System.Console.Write("What is your first name?: ");
-            input = Console.ReadLine();
+            CharacterCreation(inventory);
 
-            System.Console.Write("What is your last name?: ");
-            lastName = Console.ReadLine();
-
-            while (genderSet == false)
-            {
-                System.Console.Write("Are you male or female? (M/F): ");
-                gender = Console.ReadLine();
-
-                switch (gender.ToLower())
-                {
-                    case "m":
-                    case "male":
-                        gender = "Male";
-                        genderSet = true;
-                        break;
-                    case "f":
-                    case "female":
-                        gender = "Female";
-                        genderSet = true;
-                        break;
-                    default:
-                        System.Console.Write("Are you male or female? (M/F): ");
-                        break;
-                }
-                CurrentPlayer = new Player(input, lastName, gender, inventory, true);
-            }
             itemList = Build.BuildItems();
             enemyList = Build.BuildEnemies();
             AllRooms = Build.BuildRooms(itemList, enemyList);
@@ -59,19 +25,38 @@ namespace CastleGrimtol.Project
         }
         public void Reset()
         {
-            GameLoop();
+            Setup();
+            // List<Item> inventory = new List<Item>();
+            // Build Build = new Build();
+            // List<Item> itemList = new List<Item>();
+            // List<Enemy> enemyList = new List<Enemy>();
+
+            // Console.Clear();
+            // CharacterCreation(inventory);
+
+            // itemList = Build.BuildItems();
+            // enemyList = Build.BuildEnemies();
+            // AllRooms = Build.BuildRooms(itemList, enemyList);
+            // CurrentRoom = AllRooms[0];
         }
         public void GameLoop()
         {
-            Setup();
             string input;
             bool running = true;
             Event Event = new Event("event", true);
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Clear();
+            System.Console.WriteLine("WELCOME TO FALLOUT: PILGRIMAGE\n\n\n");
+            EnterToContinue();
+            Setup();
 
             Intro();
 
             while (running)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("Type help at any time to see a list of possible commands.\n\n\n");
                 Event.EnemyCheck(CurrentRoom);
                 Event.InventoryCheck(CurrentPlayer, CurrentRoom);
                 Event.RoomSearchCheck(CurrentRoom);
@@ -106,6 +91,7 @@ namespace CastleGrimtol.Project
                 //     }
                 // }
                 #endregion
+
                 System.Console.Write("What would you like to do?: ");
                 input = Console.ReadLine();
                 string[] inputArr = input.Split(' ');
@@ -142,62 +128,140 @@ namespace CastleGrimtol.Project
                         Console.Clear();
                         CurrentPlayer.Search(CurrentRoom, option);
                         break;
+                    case "inventory":
+                        Console.Clear();
+                        CurrentPlayer.Items(CurrentPlayer);
+                        break;
+                    case "give":
+                        Console.Clear();
+                        CurrentPlayer.GiveUp(CurrentPlayer, option);
+                        break;
                     case "help":
                         Console.Clear();
                         CurrentPlayer.Help();
                         break;
                     case "quit":
                         Console.Clear();
-                        running = false;
-                        break;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return;
                     default:
                         Console.Clear();
                         System.Console.WriteLine("I didn't understand that.");
                         break;
                 }
                 running = Event.AliveCheck(CurrentPlayer, running);
+                if (running == true && CurrentPlayer.Alive)
+                {
+                    continue;
+                }
+                else if (running == false && CurrentPlayer.Alive == false)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+                }
+                else
+                {
+                    Reset();
+                }
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public void UseItem(string itemName)
         {
-            for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
+            if (CurrentPlayer.Inventory.Count > 0)
             {
-                Item item = CurrentPlayer.Inventory[i];
-                if (item.Name.ToLower() == itemName)
+                for (int i = 0; i < CurrentPlayer.Inventory.Count; i++)
                 {
-                    CurrentPlayer.UseItem(CurrentPlayer, CurrentRoom, item);
-                    return;
+                    Item item = CurrentPlayer.Inventory[i];
+                    if (item.Name.ToLower() == itemName)
+                    {
+                        CurrentPlayer.UseItem(CurrentPlayer, CurrentRoom, item);
+                        return;
+                    }
                 }
+                System.Console.WriteLine("Use what?");
+                EnterToContinue();
+                //FIX USE AT BEGINNING BUG
             }
-            for (int i = 0; i < CurrentRoom.Items.Count; i++)
+            if (CurrentRoom.Items.Count > 0)
             {
-                Item item = CurrentRoom.Items[i];
-                if (item.Name.ToLower() == itemName)
+                for (int i = 0; i < CurrentRoom.Items.Count; i++)
                 {
-                    CurrentRoom.UseItem(item);
-                    return;
+                    Item item = CurrentRoom.Items[i];
+                    if (item.Name.ToLower() == itemName)
+                    {
+                        CurrentRoom.UseItem(item);
+                        return;
+                    }
                 }
+                System.Console.WriteLine("Use what?");
+                EnterToContinue();
             }
         }
-        public void ItemCheck()
+        public void EnterToContinue()
         {
+            System.Console.WriteLine("Press Enter to continue.");
+            System.Console.ReadLine();
+        }
+        public void CharacterCreation(List<Item> inventory)
+        {
+            string firstName;
+            string lastName;
+            string gender;
+            bool genderSet = false;
+            System.Console.Write("What is your first name?: ");
+            firstName = Console.ReadLine();
 
+            System.Console.Write("What is your last name?: ");
+            lastName = Console.ReadLine();
+
+            while (genderSet == false)
+            {
+                System.Console.Write("Are you male or female? (M/F): ");
+                gender = Console.ReadLine();
+
+                switch (gender.ToLower())
+                {
+                    case "m":
+                    case "male":
+                        gender = "Male";
+                        genderSet = true;
+                        break;
+                    case "f":
+                    case "female":
+                        gender = "Female";
+                        genderSet = true;
+                        break;
+                    default:
+                        System.Console.Write("Are you male or female? (M/F): ");
+                        break;
+                }
+                CurrentPlayer = new Player(firstName, lastName, gender, inventory, true);
+            }
+        }
+        public void WinCheck(Room currentRoom)
+        {
+            if (currentRoom.Name == "Surface")
+            {
+                System.Console.WriteLine("You made it to the surface! Finally you can really start your journey to find a new home for your family. Thanks for completing the shareware version of this game! Purchase the full game to continue your adventure! Purchase the season pass to get access to the 3 expansion DLC when they release for $59.99! Purchase the Stylin' Vault Dweller packs for $9.99 each to show the denizens of the wasteland that just because the world has gone to hell, that doesn't mean you can't still look good!");
+            }
         }
         public void Intro()
         {
-            System.Console.WriteLine(@"
-            
-             War. War never changes. 
-             
-The world was destroyed in nuclear fire on October 23, 2077. It took less than two hours for civilization to completely crumble across the globe. A small portion of the population in America was able to take shelter in one of VaultTec's underground Vaults. Those remaining on the surface were left to fend for themselves. Those that died in the initial blasts were the lucky ones. Those that didn't had the hellish task of trying to survive in the irradiated wasteland, or worse, were mutated by the fallout into horrific creatures.
-
-Your ancestors were fortunate enough to secure a spot in Vault 847. You've lived there your entire life. It's been a comfortable life, but unlike war, that is changing. Many of your fellow Vault Dwellers have grown bigotted and violent after the previous Overseer died and was replaced. Your parents don't feel it's safe to live in the Vault anymore, but know your family would likely be killed if they tried to leave. Luckily, they have a plan.
-
-Your mother knows of a secret second entrance to the vault. Your father will fake your death so the others don't become suspicious and your family will be safe. You will then leave your home and search for another place that your family can be safe.
-
-After a quick, tearful goodbye with your family you set out with only a baseball bat and some rations. Your father collapsed the tunnel leading to the second exit behind you, taking with him your PipBoy arm computer as evidence of your death. You turn away from the rubble with new resolve. You don't know very much about the outside world. But there is one thing you know from your time in school.
-
-             War. War never changes.");
+            Console.Clear();
+            System.Console.WriteLine("War. War never changes.\n");
+            EnterToContinue();
+            System.Console.WriteLine("The world was destroyed in nuclear fire on October 23, 2077. It took less than two hours for civilization to completely crumble across the globe. A small portion of the population in America was able to take shelter in one of VaultTec's underground Vaults. Those remaining on the surface were left to fend for themselves. Those that died in the initial blasts were the lucky ones. Those that didn't had the hellish task of trying to survive in the irradiated wasteland, or worse, were mutated by the fallout into horrific creatures.\n");
+            EnterToContinue();
+            System.Console.WriteLine("Your ancestors were fortunate enough to secure a spot in Vault 847. You've lived there your entire life. It's been a comfortable life, but unlike war, that is changing. Many of your fellow Vault Dwellers have grown bigotted and violent after the previous Overseer died and was replaced. Your parents don't feel it's safe to live in the Vault anymore, but know your family would likely be killed if they tried to leave. Luckily, they have a plan.\n");
+            EnterToContinue();
+            System.Console.WriteLine("Your mother knows of a secret second entrance to the vault. Your father will fake your death so the others don't become suspicious and your family will be safe. You will then leave your home and search for another place that your family can be safe.\n");
+            EnterToContinue();
+            System.Console.WriteLine("After a quick, tearful goodbye with your family you set out with only a baseball bat and some rations. Your father collapsed the tunnel leading to the second exit behind you, taking with him your PipBoy arm computer as evidence of your death. You turn away from the rubble with new resolve. You don't know very much about the outside world. But there is one thing you know from your time in school.\n");
+            EnterToContinue();
+            System.Console.WriteLine("War. War never changes.\n");
+            EnterToContinue();
+            Console.Clear();
         }
     }
 }
