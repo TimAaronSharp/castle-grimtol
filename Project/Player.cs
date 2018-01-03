@@ -78,9 +78,6 @@ namespace CastleGrimtol.Project
                                 }
                             }
                             break;
-                        case "Surface":
-
-                            return currentRoom;
                         default:
                             break;
                     }
@@ -93,7 +90,7 @@ namespace CastleGrimtol.Project
             else
             {
                 System.Console.Clear();
-                System.Console.WriteLine("Go where?");
+                System.Console.WriteLine("You can't go that direction.");
                 return currentRoom;
             }
         }
@@ -105,13 +102,12 @@ namespace CastleGrimtol.Project
                 {
                     for (int j = 0; j < currentPlayer.Inventory.Count; j++)
                     {
-                        if (item == currentPlayer.Inventory[i].Name.ToLower())
+                        if (item == currentPlayer.Inventory[j].Name.ToLower())
                         {
                             System.Console.WriteLine("You already have one of those. Why would you want another?");
                             EnterToContinue();
                             return;
                         }
-
                     }
                     if (currentRoom.Items[i].Takeable == false)
                     {
@@ -128,11 +124,7 @@ namespace CastleGrimtol.Project
                         }
                         currentRoom.Items.Remove(currentRoom.Items[i]);
                         System.Console.WriteLine("You took the " + item + "\n\n\n");
-                    }
-
-                    else
-                    {
-                        System.Console.WriteLine("Take what?");
+                        return;
                     }
                 }
             }
@@ -143,6 +135,10 @@ namespace CastleGrimtol.Project
         }
         public void Look(Room currentRoom)
         {
+            if (currentRoom.Name == "Vault Cave-in 2" && currentRoom.Searched)
+            {
+                currentRoom.Description = "There is a cave-in to the east. This was likely the way to the exit.";
+            }
             System.Console.WriteLine($@"
  {currentRoom.Name}
 
@@ -197,11 +193,24 @@ namespace CastleGrimtol.Project
                     else if (option == "room")
                     {
                         // currentRoom.Searched = true;
-                        if (currentRoom.Name == "Vault Cave-in 5")
+                        switch (currentRoom.Name)
                         {
-                            System.Console.WriteLine("There is a skeleton leaning against the wall.");
-                            EnterToContinue();
-                            return;
+                            case "Vault Cave-in 5":
+                                System.Console.WriteLine("There is a skeleton leaning against the wall.");
+                                EnterToContinue();
+                                return;
+                            case "Vault Cave-in 7":
+                                for (int i = 0; i < currentRoom.Enemies.Count; i++)
+                                {
+                                    Enemy enemy = currentRoom.Enemies[i];
+                                    if (!enemy.Dead && !enemy.Pacified)
+                                    {
+                                        currentRoom.Description += enemy.Description;
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
                         }
                         System.Console.WriteLine("You've already searched the " + searchable);
                         EnterToContinue();
@@ -392,7 +401,7 @@ namespace CastleGrimtol.Project
         }
         public void EnterToContinue()
         {
-            System.Console.WriteLine("Press Enter to continue.");
+            System.Console.WriteLine("\nPress Enter to continue.");
             System.Console.ReadLine();
         }
 

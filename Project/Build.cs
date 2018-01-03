@@ -8,20 +8,15 @@ namespace CastleGrimtol.Project
         {
             List<Item> ItemList = new List<Item>();
             #region Constructing items
-            Item bronzeKey = new Item("Bronze Key", "It's a bronze key", "Key", " There is a bronze key on the floor.", "", true);
+            // Item bronzeKey = new Item("Bronze Key", "It's a bronze key", "Key", " There is a bronze key on the floor.", "", true);
             Item pipBoy = new Item("PipBoy", "Your handy dandy PipBoy!", "Upgrade", " The light is coming from the other side of the cavern. As you walk closer you can see that it is coming from a PipBoy attached to the arm of a skeleton. The color is different with the green light shining on it, but you'd recognize it's clothes anywhere as a Vault suit. On closer inspection of the skull you see a hole on the right, lined up with another on it's left.", "", true);
             Item pistol = new Item("Pistol", "Large pistol that shoots 10mm bullets", "Weapon", " In it's hand, resting on the ground, you see it holding a bulky pistol.", "You never had much experience with guns living in the Vault. You excitedly look it over, examining every part of it. You look down the barrel of the gun to see what it looks like inside. Your thumb accidently pulls the trigger. ", true);
             Item ammo = new Item("Ammo", "It's Ammo", "Ammo", " Inside Vault Dweller's belongings you come across a box of ammo. This would come in handy.", "", true);
             Item rock = new Item("Rock", "A baseball-sized rock.", "Rock", "On the ground you see several baseball-sized rocks.", "You threw the rock as hard as you could and it shattered against the wall.", true);
-            Item terminal = new Item("Terminal", "A terminal that operates the Vault door", "Termimal", " You see a command terminal to your right.", "", false);
-            #endregion
-
-            #region Assigning directions for keys to be associated with
-            bronzeKey.Direction = "e";
+            Item terminal = new Item("Terminal", "A terminal that operates the Vault door", "Termimal", " Pipes and valves line the walls of the room. You see a command terminal to your right.", "", false);
             #endregion
 
             #region Adding items to list to pass as argument
-            ItemList.Add(bronzeKey);
             ItemList.Add(pipBoy);
             ItemList.Add(pistol);
             ItemList.Add(ammo);
@@ -48,15 +43,15 @@ namespace CastleGrimtol.Project
             List<Room> AllRooms = new List<Room>();
             #region Building rooms
 
-            Room room1 = new Room("Vault Cave-in 1", "There is a cave-in on the west side of the cavern. Looking at it fills you with resolve to find a new home for your family. The only way to go is east.");
-            Room room2 = new Room("Vault Cave-in 2", "There is a cave-in to the east. This was likely the way to the exit. You feel a sting of discouragement. You'll have to find another way.");
+            Room room1 = new Room("Vault Cave-in 1", "There is a cave-in on the west side of the cavern. Looking at it fills you with resolve to find a new home for your family. The only way to go is east. Debris litters the floor.");
+            Room room2 = new Room("Vault Cave-in 2", "There is a cave-in to the east. This was likely the way to the exit. You feel a sting of discouragement. You'll have to search for another way.");
             Room room3 = new Room("Vault Cave-in 3", "You find yourself in a narrow corridor with just barely enough room for you to fit through. It's getting darker the further into the cave you go. You can continue north or south.");
-            Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. You can see a light coming from the east.");
+            Room room4 = new Room("Vault Cave-in 4", "The cavern is almost pitch black here. The sounds of various cave creatures scurrying around that you can't see makes you uneasy. You can see a light coming from the east.");
             Room room5 = new Room("Vault Cave-in 5", "");
-            Room room6 = new Room("Vault Cave-in 6", "The passageway curves. There are paths to the north and east.");
-            Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern.");
-            Room room8 = new Room("Vault Cave-in 8", "There is a cave-in on the west side of the cavern. You think it is probably the cave-in that blocked your way when you started. There are passageways south and east.");
-            Room room9 = new Room("Vault Cave-in 9", "You finally see the Vault door on the east side of the cavern, a giant gear shaped door. You can go back west to go further into the cave.");
+            Room room6 = new Room("Vault Cave-in 6", "The passageway curves. Water slowely drips rhythmically from a stalactite hanging from the ceiling, the sound echoing loudly. There are paths to the north and east.");
+            Room room7 = new Room("Vault Cave-in 7", "The passageway opens up to a large cavern. You see exits on the north and west.");
+            Room room8 = new Room("Vault Cave-in 8", "There is a cave-in on the west side of the cavern. You think it is probably the cave-in that blocked your way when you started. You look at it with a mix of irritation for lengthening your escapse and putting you in more danger, and relief at knowing you've passed that obstacle. There are passageways south and east. Debris litters the floor.");
+            Room room9 = new Room("Vault Cave-in 9", "You finally see it on the east side of the cavern. Looming over you is a giant, metal, gear shaped door. You can feel it. You're so close! You can go west to return further into the cave.");
             Room room10 = new Room("Surface", "");
 
             #endregion
@@ -102,12 +97,11 @@ namespace CastleGrimtol.Project
             #endregion
 
             #region Assigning items from itemList by name for easier readability
-            Item bronzeKey = itemList[0];
-            Item pipBoy = itemList[1];
-            Item pistol = itemList[2];
-            Item ammo = itemList[3];
-            Item rock = itemList[4];
-            Item terminal = itemList[5];
+            Item pipBoy = itemList[0];
+            Item pistol = itemList[1];
+            Item ammo = itemList[2];
+            Item rock = itemList[3];
+            Item terminal = itemList[4];
             #endregion
 
             #region Assigning enemies from enemyList by name for easier readability

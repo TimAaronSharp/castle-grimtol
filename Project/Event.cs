@@ -5,7 +5,6 @@ namespace CastleGrimtol.Project
     public class Event
     {
         public string Name { get; set; }
-
         public bool Events { get; set; }
         public int MyProperty { get; set; }
         public Event(string name, bool events)
@@ -65,7 +64,7 @@ namespace CastleGrimtol.Project
                         switch (item.Name)
                         {
                             case "PipBoy":
-                                room.Description = "You find yourself in a narrow corridor with just barely enough room for you to fit through.";
+                                room.Description = "You find yourself in a narrow corridor with just barely enough room for you to fit through. You can continue north or south.";
                                 break;
                             default:
                                 break;
@@ -77,7 +76,7 @@ namespace CastleGrimtol.Project
                             case "PipBoy":
                                 room.Locked.Remove("s");
                                 room.Locked.Remove("w");
-                                room.Description = "The cavern, now illuminated, reveals the narrow passage to the north, a passage to the east, and a passage to the south.";
+                                room.Description = "The cavern, now illuminated, reveals the narrow passage to the north, a passage to the east, and a passage to the south. The small creatures that occupied the room flee in the presence of the light of your PipBoy.";
                                 break;
                             default:
                                 break;
@@ -98,14 +97,19 @@ namespace CastleGrimtol.Project
                 }
             }
         }
-        public void EnemyCheck(Room room)
+        public void EnemyCheck(Room room, Player currentPlayer)
         {
             if (room.Enemies.Count > 0)
             {
                 for (int i = 0; i < room.Enemies.Count; i++)
                 {
                     Enemy enemy = room.Enemies[i];
-                    if (room.EnemyDescribed == false && enemy.Dead == false)
+                    if (room.Name == "Vault Cave-in 7" && enemy.Dead == false)
+                    {
+                        room.EnemyDescribed = true;
+                        room.Description = room.DefaultDescription + enemy.Description;
+                    }
+                    else if (room.EnemyDescribed == false && enemy.Dead == false)
                     {
                         room.EnemyDescribed = true;
                         if (enemy.Pacified == false)
@@ -185,7 +189,7 @@ namespace CastleGrimtol.Project
         }
         public void EnterToContinue()
         {
-            System.Console.WriteLine("Press Enter to continue.");
+            System.Console.WriteLine("\nPress Enter to continue.");
             System.Console.ReadLine();
         }
     }
