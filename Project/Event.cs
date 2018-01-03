@@ -107,7 +107,14 @@ namespace CastleGrimtol.Project
                     if (room.Name == "Vault Cave-in 7" && enemy.Dead == false)
                     {
                         room.EnemyDescribed = true;
-                        room.Description = room.DefaultDescription + enemy.Description;
+                        if (enemy.Pacified)
+                        {
+                            room.Description = room.DefaultDescription;
+                        }
+                        else
+                        {
+                            room.Description = room.DefaultDescription + enemy.Description;
+                        }
                     }
                     else if (room.EnemyDescribed == false && enemy.Dead == false)
                     {

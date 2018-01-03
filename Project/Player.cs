@@ -137,7 +137,7 @@ namespace CastleGrimtol.Project
         {
             if (currentRoom.Name == "Vault Cave-in 2" && currentRoom.Searched)
             {
-                currentRoom.Description = "There is a cave-in to the east. This was likely the way to the exit.";
+                currentRoom.Description = "There is a cave-in to the east. This was likely the way to the exit. A narrow passageway lies to the south.";
             }
             System.Console.WriteLine($@"
  {currentRoom.Name}
